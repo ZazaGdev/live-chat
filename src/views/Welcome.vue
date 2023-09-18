@@ -9,7 +9,7 @@
     <div v-else>
         <h2>Sign Up</h2>
         <SignupForm />
-        <p>ALREADY have an account you gorgeous??? <span @click="showLogin = true" class="text-primary cursor-pointer">Login</span></p>
+        <p>ALREADY have an account you gorgeous??? <span @click="showLogin = true" class="text-primary cursor-pointer text-underline">Login</span></p>
     </div>
   </div>
 </template>

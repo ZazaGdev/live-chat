@@ -9,6 +9,7 @@
         <label class="mt-3">Password</label>
         <input type="password" required placeholder="Password" v-model="password" class="form-control w-100">
 
+        <div class="error"> {{ error }}</div>
         <button class="btn-primary my-4">Sign Up</button>
     </form>
 </template>
@@ -16,17 +17,24 @@
 <script>
 import { ref } from 'vue'
 
+import useSignup from '../composables/useSignup'
+
 export default {
     setup() {
+        // composables
+        const { error, signup } = useSignup()
+
+        // refs
         const userName = ref('')
         const email = ref('')
         const password = ref('')
 
-        const handleSignup = () => {
-            console.log(userName.value, email.value, password.value);
+        const handleSignup = async () => {
+            await signup(email.value, password.value, userName.value)
+            console.log('Signed Up');
         }
 
-        return { userName, email, password, handleSignup}
+        return { userName, email, password, handleSignup, error}
     }
 }
 </script>
