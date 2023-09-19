@@ -13,4 +13,8 @@ body {
 
 .error {
   color: red;
+}
+
+.navbar-collapse {
+  flex-grow: 0;
 }/*# sourceMappingURL=main.css.map */
