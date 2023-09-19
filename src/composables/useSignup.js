@@ -1,8 +1,8 @@
 import { projectAuth } from "../firebase/config"
 import { ref } from "vue"
 
-
 const error = ref(null)
+
 const signup = async (email, password, userName) => {
     error.value = null
 

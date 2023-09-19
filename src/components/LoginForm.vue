@@ -6,23 +6,30 @@
         <label class="mt-3">Password</label>
         <input type="password" required placeholder="Password" v-model="password" class="form-control w-100">
 
+        <div class="error">{{ error }}</div>
         <button class="btn-primary my-4">Login</button>
     </form>
 </template>
 
 <script>
 import { ref } from 'vue'
-
+import useLogin from '../composables/useLogin'
 export default {
     setup() {
         const email = ref('')
         const password = ref('')
 
-        const handleSignin = () => {
-            console.log(email.value, password.value);
+        const { error, login } = useLogin()
+
+        const handleSignin = async () => {
+            await login(email.value, password.value)
+
+            if(!error.value) {
+                console.log('user logged in');
+            }
         }
 
-        return { email, password, handleSignin}
+        return { email, password, handleSignin, error}
     }
 }
 </script>
