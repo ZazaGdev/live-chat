@@ -1,7 +1,10 @@
 <template>
-    <nav class="navbar navbar-expand-sm navbar-light bg-light">
+    <nav class="navbar navbar-expand-sm navbar-light bg-light" v-if="user">
         <div class="container-fluid justify-content-between d-flex">
-            <a class="navbar-brand" href="#">Hello, displayName</a>
+            <a class="navbar-brand" href="#">
+                <p>Hello, {{ user.displayName }}</p>
+                <p>Logged in as {{ user.email }}</p>
+            </a>
 
             <button
                 class="navbar-toggler"
@@ -27,10 +30,13 @@
 </template>
 
 <script>
+import getUser from '../composables/getUser'
 import useLogout from '../composables/useLogout'
+
 export default {
     setup() {
         const { error, logout } = useLogout()
+        const { user } = getUser()
 
         const handleLogout = async () => {
             await logout()
@@ -40,7 +46,7 @@ export default {
             }
         }
 
-        return { handleLogout }
+        return { handleLogout, user }
     },
 }
 </script>
