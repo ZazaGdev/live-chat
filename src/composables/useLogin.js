@@ -1,5 +1,5 @@
-import { projectAuth } from "../firebase/config"
-import { ref } from "vue"
+import { projectAuth } from '../firebase/config'
+import { ref } from 'vue'
 
 const error = ref(null)
 
@@ -10,16 +10,15 @@ const login = async (email, password) => {
         const res = await projectAuth.signInWithEmailAndPassword(email, password)
         error.value = null
 
-        console.log(res);
         return res
     } catch (err) {
         error.value = 'Incorrect Login Credentials'
-        console.log(error.value);
+        console.log(error.value)
     }
 }
 
 const useLogin = () => {
-    return { error, login}
+    return { error, login }
 }
 
 export default useLogin
