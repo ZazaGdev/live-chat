@@ -1,9 +1,9 @@
 <template>
     <div class="chat-window">
         <div class="error" v-if="error">{{ error }}</div>
-        <div v-if="documents" class="messages">
-            <div v-for="doc in documents" :key="doc.id" class="single-message">
-                <span class="sent-at"> {{ doc.sentAt.toDate() }}</span>
+        <div v-if="documents" class="messages" ref="messagesWrapper">
+            <div v-for="doc in formattedDocuments" :key="doc.id" class="single-message">
+                <span class="sent-at"> {{ doc.sentAt }}</span>
                 <span class="name"> {{ doc.user }}</span>
                 <span class="message"> {{ doc.message }}</span>
             </div>
@@ -12,14 +12,27 @@
 </template>
 
 <script>
+import { computed, ref, onUpdated } from 'vue'
 import getCollection from '../composables/getCollection'
+import { formatDistanceToNow } from 'date-fns'
 
 export default {
     setup() {
         const { error, documents } = getCollection('messages')
+        const messagesWrapper = ref([])
 
-        console.log(documents)
-        return { error, documents }
+        const formattedDocuments = computed(() => {
+            if (documents.value) {
+                return documents.value.map((doc) => {
+                    let time = formatDistanceToNow(doc.sentAt.toDate())
+                    return { ...doc, sentAt: time }
+                })
+            }
+        })
+
+        onUpdated(() => (messagesWrapper.value.scrollTop = messagesWrapper.value.scrollHeight))
+
+        return { error, documents, formattedDocuments, messagesWrapper }
     },
 }
 </script>
@@ -28,6 +41,7 @@ export default {
 .chat-window {
     background: #fafafa;
     padding: 30px 20px;
+    border-top: 1px solid rgb(181, 181, 181);
 }
 .single-message {
     margin: 18px 0;

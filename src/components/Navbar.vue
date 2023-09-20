@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar navbar-expand-sm navbar-light bg-light" v-if="user">
+    <nav class="navbar navbar-expand-sm navbar-light" v-if="user">
         <div class="container-fluid justify-content-between d-flex">
             <a class="navbar-brand" href="#">
                 <p>Hello, {{ user.displayName }}</p>
