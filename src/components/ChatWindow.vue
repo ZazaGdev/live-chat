@@ -1,0 +1,49 @@
+<template>
+    <div class="chat-window">
+        <div class="error" v-if="error">{{ error }}</div>
+        <div v-if="documents" class="messages">
+            <div v-for="doc in documents" :key="doc.id" class="single-message">
+                <span class="sent-at"> {{ doc.sentAt.toDate() }}</span>
+                <span class="name"> {{ doc.user }}</span>
+                <span class="message"> {{ doc.message }}</span>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+import getCollection from '../composables/getCollection'
+
+export default {
+    setup() {
+        const { error, documents } = getCollection('messages')
+
+        console.log(documents)
+        return { error, documents }
+    },
+}
+</script>
+
+<style>
+.chat-window {
+    background: #fafafa;
+    padding: 30px 20px;
+}
+.single-message {
+    margin: 18px 0;
+}
+.sent-at {
+    display: block;
+    color: #999;
+    font-size: 12px;
+    margin-bottom: 4px;
+}
+.name {
+    font-weight: bold;
+    margin-right: 6px;
+}
+.messages {
+    max-height: 400px;
+    overflow: auto;
+}
+</style>

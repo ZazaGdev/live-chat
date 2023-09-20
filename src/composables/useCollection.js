@@ -8,7 +8,7 @@ const useCollection = (collection) => {
         error.value = null
 
         try {
-            await projectFirestore.collection(collection).add({ document })
+            await projectFirestore.collection(collection).add(document)
         } catch (err) {
             console.log(err.message)
             error.value = err.message
